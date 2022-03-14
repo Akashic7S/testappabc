@@ -1,0 +1,72 @@
+import React, { useState, useEffect, Fragment } from 'react';
+import './App.css';
+import AddTodo from './components/AddTodo';
+
+function App() {
+  const [todos, setTodos] = useState([{ id: 1, task: 'Walk the fucking dog', complete: false }, { id: 2, task: 'take a shiit', complete: true }, { id: 3, task: 'Become batman', complete: false }]);
+
+  const addTodo = (text) => {
+    setTodos([...todos, { id: todos.length + 1, task: text, complete: false }])
+  }
+
+  const deleteTodo = (id) => {
+    let newTodos = todos.filter((todo) => (
+      todo.id !== id
+    ))
+    setTodos([...newTodos]);
+  }
+
+
+  const onCheckChange = (id) => {
+    /*
+    let newTodos = todos.map((todo) => (
+      todo.id == item.id && { ...item, complete: !todo.id }
+    ))
+    */
+    // setTodos(({ todos }) => { [...todos].map((todo) => todo.id == item.id && { ...item, complete: !todo.id }) })
+    let updatedTodos = todos.map((todo) => {
+      if (todo.id == id) {
+        todo.complete = !todo.complete
+      }
+      return todo;
+    })
+    setTodos(updatedTodos)
+  }
+
+  console.log(todos)
+
+  return (
+    <div className="App">
+      <h1>Todo List</h1>
+      <AddTodo addTodo={addTodo} />
+
+
+
+      {todos.map((item) => (
+        <div key={item.id} style={{ marginBottom: '10px', marginTop: '10px' }}>
+          <input type='checkbox' checked={item.complete} onClick={() => onCheckChange(item.id)} />
+          <span> {item.task}</span>
+          <button style={{ marginLeft: '20px' }} onClick={() => deleteTodo(item.id)}>Delete this Todo</button>
+
+        </div>
+      ))}
+
+    </div>
+  );
+}
+
+export default App;
+
+/*
+Todo list features 
+- Add todo
+- Delete todo
+- render all todos 
+- lookup specific todo 
+- Delete all todos 
+- Mark todo as complete or incomplete 
+
+Todo list data structure 
+-Array 
+-todo {id: number, task: string, complete: boolean}
+*/

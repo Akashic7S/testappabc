@@ -1,0 +1,34 @@
+import React, { useState, useEffect } from 'react'
+
+const AddTodo = ({ addTodo }) => {
+  const [text, setText] = useState('');
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    //console.log('success')
+    //alert('Subbmiting Todo')
+    addTodo(text);
+    setText('');
+  }
+
+  return (
+    <form onSubmit={onSubmit}>
+
+
+      <label style={{ marginRight: '20px' }}>Enter Todo    </label>
+      <input
+        style={{ marginRight: '20px' }}
+        type="text"
+        value={text}
+        onChange={e => setText(e.target.value)}
+      />
+
+
+
+
+      <input type='submit' value='Submit' />
+    </form>
+  )
+}
+
+export default AddTodo
